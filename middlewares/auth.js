@@ -5,7 +5,12 @@ const auth=(req,res,next)=>{
          let token=req.headers.authorization.split(" ")[1];
          if(token){
             var decoded = jwt.verify(token, 'blog')
-            console.log(decoded)
+            if(decoded){
+                next()
+            }else{
+                res.staus(201).send({"msg":"Please Login first"})
+
+            }
          }else{
             res.staus(201).send({"msg":"Please Login first"})
          }

@@ -3,7 +3,7 @@ const app=express()
 const cors=require('cors')
 app.use(cors())
 app.use(express.json())
-
+const {auth}=require("./middlewares/auth")
 const {connection}=require("./server/server")
 app.get("/",(req,res)=>{
     res.send("Blog app Backend")
@@ -12,7 +12,7 @@ app.get("/",(req,res)=>{
 const {userRouter}=require("./routes/User.route")
 app.use("/",userRouter)
 const {blogRouter}=require("./routes/Blog.route")
-app.use('/blogs',blogRouter)
+app.use('/blogs',auth,blogRouter)
 require('dotenv').config();
 const port=process.env.PORT;
 app.listen(port,async()=>{
